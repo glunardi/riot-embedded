@@ -218,4 +218,16 @@
 /* ||| Text styles */
 .text-muted {
     color: $color-txt-muted;
+    visibility: hidden;
+    display: none;
+}
+
+h4 {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+}
+
+p {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
 }

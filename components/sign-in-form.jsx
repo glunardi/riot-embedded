@@ -75,6 +75,7 @@ export default class SignInForm extends PureComponent {
         if (this.state.state == 'success') return (
             <div className='form'>
                 <h2>Signed in successfully!</h2>
+		<p>Close dialog to continue.</p>
             </div>
         );
         return (

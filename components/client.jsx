@@ -63,6 +63,15 @@ export default class Client extends Component{
         if (props.theme === 'auto') this.deviceTheme = true;
         this.sdk = require('matrix-js-sdk');
 
+	//Retrieve room and user details from url
+	const url = require('url');
+	const current_url = new URL (window.location.href);
+	// get access to URLSearchParams object
+	const search_params = current_url.searchParams;
+	// get url parameters
+	const urlroomid = search_params.get('urlroomid');
+	const urluserid = search_params.get('urluserid');
+
         // TODO: Load from whitelist from config
         this.messageHandler = new MessageHandler(this.props.whitelist);
 
@@ -450,7 +459,7 @@ export default class Client extends Component{
         return (
             <ThemeContext.Provider value={{theme: this.state.theme, highlight: this.state.highlight}}>
                 <div className={`client bg-primary-${this.state.theme}`}>
-                    <Modal visible={siPrompt} title='Sign in' ref={this.signInModal}>
+                    <Modal visible={siPrompt} title='LPC2021 Chat Login' ref={this.signInModal}>
                         <SignInForm client={this.client} setUser={this.setUser} msgComposer={this.msgComposer} />
                     </Modal>
                     

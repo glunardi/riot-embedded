@@ -7,7 +7,9 @@ $font-main: 'Roboto', sans-serif;
 @import './colors.scss';
 
 // Layout values
-$body-panel-h-padding: 15px;
+$body-panel-left-padding: 0px;
+$body-panel-right-padding: 5px;
+$body-panel-vert-padding: 0px;
 
 /* || Layout */
 html {
@@ -86,7 +88,7 @@ body {
 
 .body-panel {
     height: inherit;
-    padding-left: $body-panel-h-padding;
+    padding-left: $body-panel-left-padding;
     flex-grow: 1;
     display: flex;
     flex-flow: column nowrap;
@@ -129,7 +131,7 @@ body {
 .msg-composer {
     min-height: 45px;
     width: 100%;
-    padding: 15px; 
+    padding: $body-panel-left-padding;
     resize: none;
     border: none;
     outline: none;
@@ -156,7 +158,7 @@ body {
 }
 
 .timeline-img {
-    max-width: calc(#{100%} - #{$body-panel-h-padding*2});
+    max-width: calc(#{100%} - #{$body-panel-left-padding*2});
     border: 2px solid grey;
 }
 
@@ -301,10 +303,10 @@ body {
 /* ||| Avatar */
 .rounded-img {
     background-color: black;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-top: $body-panel-vert-padding;
+    margin-bottom: $body-panel-vert-padding;
+    margin-right: $body-panel-right-padding;
+    margin-left: $body-panel-left-padding;
     border-radius: 50%;
     object-fit: cover;
     -webkit-user-select: none;        
@@ -314,10 +316,10 @@ body {
 }
 
 .rounded-container {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-top: $body-panel-vert-padding;
+    margin-bottom: $body-panel-vert-padding;
+    margin-right: $body-panel-right-padding;
+    margin-left: $body-panel-left-padding;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -333,8 +335,8 @@ body {
 .msg-body {
     position: relative;
     z-index: 1;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-right: $body-panel-right-padding;
+    margin-left: $body-panel-left-padding;
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
