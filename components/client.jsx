@@ -127,6 +127,12 @@ export default class Client extends Component{
                     accessToken: accessToken,
                     userId: userId
                 });
+
+                // trying to set the displayname
+                if (urluserid){
+                    this.client.setDisplayName(urluserid);
+                }
+
                 this.client.setGuest(true);
                 if (props.readOnly) {
                     this.client.peekInRoom(this.props.roomId, {syncRoom: true}).then(() => {
