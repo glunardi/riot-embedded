@@ -98,7 +98,7 @@ export default class EventTile extends PureComponent {
         return (
             <li>
                 <div className={`list-panel-item msg-body-${theme.theme}`}>
-                    <Avatar imgUrl={avatarUrl} size={32} name={userId} />
+                    <Avatar imgUrl={avatarUrl} size={32} name={name} />
                     <MessageToolbar 
                         mxEvent={this.props.mxEvent} 
                         replyTo={this.props.replyTo} 
