@@ -451,16 +451,21 @@ export default class Client extends Component{
         // Generate typing text
         let typingText = '';
         let setSize = this.state.currentlyTyping.size;
+	let bouncingDots = "";
+	if (setSize > 0) {
+	    bouncingDots = "...";
+	}
         if (setSize > 0 && setSize <= 3) {
             // Display names of currently typing users
             const verb = setSize == 1 ? 'is' : 'are';
             typingText = 
-                `${Array.from(this.state.currentlyTyping).join(', ')} ${verb} typing...`;
-
+                `${Array.from(this.state.currentlyTyping).join(', ')} ${verb} typing`;
+            bouncingDots = `${bouncingDots}`;
         } else if (setSize > 3) {
             // Display number of currently typing users
-            typingText = `${setSize} users are typing...`;
-        }
+            typingText = `${setSize} users are typing`;
+            bouncingDots = `${bouncingDots}`;
+	}
 
         return (
             <ThemeContext.Provider value={{theme: this.state.theme, highlight: this.state.highlight}}>
@@ -558,7 +563,7 @@ export default class Client extends Component{
                         <TimelinePanel homeserver={homeserver} room={this.state.room} 
                             client={this.client} replyTo={this.replyTo} 
                             canWrite={this.state.msgComposer} isGuest={this.isGuest}
-                            showReceipts={this.showReceipts} typingText={typingText} >
+                            showReceipts={this.showReceipts} typingText={typingText} bouncingDots={bouncingDots} >
                             {this.state.reply && this.state.msgComposer ? 
                                 <ReplyPopup homeserver={homeserver} 
                                     mxEvent={this.state.reply} client={this.client} 

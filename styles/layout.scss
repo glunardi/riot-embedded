@@ -114,11 +114,15 @@ body {
 }
 
 .typing-panel {
+    z-index: 1000;
+    margin-left: 5px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 19px;
+}
+
+.bouncing-dots {
     animation: pulse 1s infinite;
+    margin-left: 5px;
 }
 
 .composer-panel {
@@ -490,14 +494,14 @@ a:visited {
 
 @keyframes pulse {
     0% {
-        transform: scale(0.95);
-    }
-
-    70% {
         transform: scale(1);
     }
 
+    70% {
+        transform: scale(1.4);
+    }
+
     100% {
-        transform: scale(0.95);
+        transform: scale(1);
     }
 }
