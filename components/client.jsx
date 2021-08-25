@@ -388,7 +388,7 @@ export default class Client extends Component{
             this.list.push(
                 <li className='user-list-item'
                     key={user.userId}>
-                    <Avatar imgUrl={avatarUrl} size={32} name={user.userId} />
+                    <Avatar imgUrl={avatarUrl} size={32} name={user.displayName}/>
                     <h4>{user.displayName} <i className='text-muted'>{user.userId}</i></h4>
                 </li>
             );
