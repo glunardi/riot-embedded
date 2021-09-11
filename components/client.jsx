@@ -30,6 +30,7 @@ import Avatar from './avatar';
 export default class Client extends Component{
     static propTypes = {
         roomId: PropTypes.string.isRequired, // The ID of default room
+        displayName: PropTypes.string, // The full name as display name
         userId: PropTypes.string, // The ID of default user
         accessToken: PropTypes.string, // The access token of default user
         baseUrl: PropTypes.string.isRequired, // The base URL of homeserver
@@ -62,15 +63,6 @@ export default class Client extends Component{
         };
         if (props.theme === 'auto') this.deviceTheme = true;
         this.sdk = require('matrix-js-sdk');
-
-	//Retrieve room and user details from url
-	const url = require('url');
-	const current_url = new URL (window.location.href);
-	// get access to URLSearchParams object
-	const search_params = current_url.searchParams;
-	// get url parameters
-	const urlroomid = search_params.get('urlroomid');
-	const urluserid = search_params.get('urluserid');
 
         // TODO: Load from whitelist from config
         this.messageHandler = new MessageHandler(this.props.whitelist);
@@ -128,9 +120,9 @@ export default class Client extends Component{
                     userId: userId
                 });
 
-                // trying to set the displayname
-                if (urluserid){
-                    this.client.setDisplayName(urluserid);
+                // trying to set the displayname from BBB via url
+                if (this.props.displayName){
+                    this.client.setDisplayName(this.props.displayName);
                 }
 
                 this.client.setGuest(true);
