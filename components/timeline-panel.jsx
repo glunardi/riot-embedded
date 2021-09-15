@@ -15,7 +15,6 @@ import ThemeContext from './theme-context.jsx';
  * @param   {boolean} isGuest - If client is in guest mode
  * @param   {func} showReceipts - Callback to show read receipts
  * @param   {string} typingText - Prompt about currently typing users
- * @param   {string} bouncingDots - Animated dots when users are typing
  */
 export default class TimelinePanel extends PureComponent {
     static propTypes = {
@@ -28,7 +27,6 @@ export default class TimelinePanel extends PureComponent {
         isGuest: PropTypes.bool, // If client is in guest mode
         showReceipts: PropTypes.func, // Callback to show read receipts
         typingText: PropTypes.string, // Prompt about currently typing users
-        bouncingDots: PropTypes.string // Animated dots when users are typing
     };
 
     constructor(props) {
@@ -156,8 +154,7 @@ export default class TimelinePanel extends PureComponent {
                     <ul className='list-panel' id='timeline-list' >
                         {timeline}
                         <div className='typing-panel'>
-                            <i>{this.props.typingText}</i>
-		             <div className='bouncing-dots'>{this.props.bouncingDots}</div>
+                            {this.props.typingText}
                         </div>
                     </ul>
                 </div>
