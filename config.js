@@ -5,17 +5,17 @@ const current_url = new URL (window.location.href);
 const search_params = current_url.searchParams;
 // get url parameters
 const urlroomid = search_params.get('urlroomid');
-var matchingroomid = '!vXkkJuXeNvFVmrNvpq:matrix-testing.lpc.events';
+var matchingroomid = '!gFXXSebbwZTfzaEinO:lpc.events';
 const urluserid = search_params.get('urluserid');
 
 // generate roomId from BBB from url parameter
 if (urlroomid){
-    matchingroomid ="!" + urlroomid + ":matrix-testing.lpc.events";
+    matchingroomid ="!" + urlroomid + ":lpc.events";
 }
 console.log(matchingroomid);
 
 export let config = {
-    baseUrl: 'https://matrix-testing.lpc.events:8448',
+    baseUrl: 'https://chat.lpc.events:8448',
     roomId: matchingroomid,
     roomHeader: false,
     roomsList: false,
