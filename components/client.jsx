@@ -125,10 +125,9 @@ export default class Client extends Component{
                     userId: userId
                 });
 
-                // trying to set the displayname from BBB via url
-                if (this.props.displayName){
-                    this.client.setDisplayName(this.props.displayName);
-                }
+                // Note: the displayName now has to come from LDAP
+                // (either initals field from from LDAP,
+                // or the user preferences after that)
 
                 this.joinRoomConsentSafe(this.props.roomId, () => {this.init();});
             });
