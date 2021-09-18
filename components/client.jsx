@@ -15,6 +15,7 @@ import Avatar from './avatar';
  * React component for the client 
  * 
  * @param   {string} roomId - The ID of default room
+ * @param   {string} displayName - The display name for the user
  * @param   {string} userId - The ID of default user
  * @param   {string} accessToken - Access token of default user
  * @param   {string} baseUrl - Base URL of homeserver
@@ -26,6 +27,8 @@ import Avatar from './avatar';
  * @param   {boolean} msgComposer - If message composer should be displayed
  * @param   {Array} whitelist - Whitelisted origins
  * @param   {string} signInPrompt - Show sign in prompt for - none, guests, all 
+ * @param   {string} email - LPC 2021 email transformed into Matrix userId
+ * @param   {string} regcode - LPC 2021 registration code
  */
 export default class Client extends Component{
     static propTypes = {
@@ -41,7 +44,9 @@ export default class Client extends Component{
         roomsList: PropTypes.bool, // Enable roomsList? Overrides readOnly
         msgComposer: PropTypes.bool, // Enable msgComposer? Overrides readOnly
         whitelist: PropTypes.array, // Whitelisted origins - ignore to allow all
-        signInPrompt: PropTypes.string // Show signInPrompt for - none, guests, all
+        signInPrompt: PropTypes.string, // Show signInPrompt for - none, guests, all
+        email: PropTypes.string, // LPC 2021 email transformed into Matrix userId
+        regcode: PropTypes.string // LPC 2021 registration code
     };
 
     constructor(props) {
@@ -97,8 +102,61 @@ export default class Client extends Component{
         this.consentModal = createRef();
         this.msgComposer = createRef();
 
-        if (!props.accessToken || !props.userId) {
-            // If either accessToken or userId is absent
+        if (props.regcode && props.userId) {
+            // LPC 2021 New password-based login logic
+            // with the regcode as password parms
+
+            this.isGuest = false;
+            console.log("I suck at this :-)");
+
+            this.client = this.sdk.createClient({
+                baseUrl: props.baseUrl
+            });
+
+            this.client.login("m.login.password", {"user": props.userId, "password": props.regcode}).then((response) => {
+
+                console.log(response.access_token);
+
+                let userId = response.user_id;
+                let accessToken = response.access_token;
+                this.client = this.sdk.createClient({
+                    baseUrl: props.baseUrl,
+                    accessToken: accessToken,
+                    userId: userId
+                });
+
+                // trying to set the displayname from BBB via url
+                if (this.props.displayName){
+                    this.client.setDisplayName(this.props.displayName);
+                }
+
+                this.joinRoomConsentSafe(this.props.roomId, () => {this.init();});
+            });
+
+            // this.client.joinRoom(this.props.roomId, {syncRoom: true}).then(() => {
+            //         this.init();
+            //     });
+        } else if (props.accessToken && props.userId) {
+            // Token based login (static from config.js for now)
+            this.isGuest = false;
+
+            this.client = this.sdk.createClient({
+                baseUrl: props.baseUrl,
+                accessToken: props.accessToken,
+                userId: props.userId
+            });
+
+            if (props.readOnly) {
+                this.client.peekInRoom(this.props.roomId, {syncRoom: true}).then(() => {
+                    this.init();
+                });
+            } else {
+                this.client.joinRoom(this.props.roomId, {syncRoom: true}).then(() => {
+                    this.init();
+                });
+            }
+        } else if (!props.accessToken || !props.regcode) {
+            // If either accessToken or regcode is absent
             // Register as guest
             this.isGuest = true;
 
@@ -136,24 +194,6 @@ export default class Client extends Component{
                     });
                 }
             });
-        } else {
-            this.isGuest = false;
-
-            this.client = this.sdk.createClient({
-                baseUrl: props.baseUrl,
-                accessToken: props.accessToken,
-                userId: props.userId
-            });
-
-            if (props.readOnly) {
-                this.client.peekInRoom(this.props.roomId, {syncRoom: true}).then(() => {
-                    this.init();
-                });
-            } else {
-                this.client.joinRoom(this.props.roomId, {syncRoom: true}).then(() => {
-                    this.init();
-                });
-            }
         }
     }
 
