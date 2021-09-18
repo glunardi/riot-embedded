@@ -1,7 +1,8 @@
 // Default settings
-const servername = 'matrix-testing.lpc.events';
-const realmname = 'matrix-testing.lpc.events';
-var matchingroomid = '!XtgvTmGxsgQhgfEDuQ:matrix-testing.lpc.events';
+const servername = 'chat.lpc.events';
+const realmname = 'lpc.events';
+// Using #Helpdesk:lpc.events by default in case all else fails
+var matchingroomid = '!gFXXSebbwZTfzaEinO:lpc.events';
 
 // Retrieve room and user details from url
 const current_url = new URL (window.location.href);
